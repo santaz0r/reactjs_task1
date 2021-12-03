@@ -2,49 +2,29 @@ import React, { useState } from "react";
 import api from "../api";
 
 const Users = () => {
-  //   console.log(api.users.fetchAll());
   const [users, setUsers] = useState(api.users.fetchAll());
   const handleDelete = (id) => {
     setUsers((prevState) => prevState.filter((tag) => tag._id !== id));
   };
-  const handleChangeText = () => {
-    let arrLength = users.length.toString().split("");
-    let lastNum = arrLength[arrLength.length - 1];
-    const defaultClass = "badge bg-primary";
-
-    if (lastNum >= 5 || users.length >= 10)
-      return (
-        <span className={defaultClass}>
-          {users.length} человек тусанет с тобой сегодня
-        </span>
-      );
-    if (lastNum > 1)
-      return (
-        <span className={defaultClass}>
-          {users.length} человека тусанут с тобой сегодня
-        </span>
-      );
-    if (users.length === 1)
-      return (
-        <span className={defaultClass}>
-          {users.length} человек тусанет с тобой сегодня
-        </span>
-      );
-
-    if (users.length === 0) {
-      // const table = document.querySelector(".table");
-
-      return (
-        // (table.style.display = "none"),
-        <span className="badge bg-danger">
-          Никто с тобой не тусанет сегодня
-        </span>
-      );
-    }
+  const handleChangeText = (number) => {
+    let lastNum = Number(number.toString().split("").slice(-1));
+    if (number > 4 && number < 15) return "Человек тусанет";
+    if ([2, 3, 4].includes(lastNum)) return "Человека тусанут";
+    if (lastNum === 1) return "Человек тусанет";
   };
   return (
     <>
-      {handleChangeText()}
+      <h2>
+        <span
+          className={"badge bg-" + (users.length > 0 ? "primary" : "danger")}
+        >
+          {users.length > 0
+            ? `${users.length} ${handleChangeText(
+                users.length
+              )} с тобой сегодня`
+            : "Никто с тобой не тусанет"}
+        </span>
+      </h2>
       {users.length !== 0 && (
         <table className="table">
           <thead>
