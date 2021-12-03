@@ -31,12 +31,18 @@ const Users = () => {
         </span>
       );
 
-    if (users.length === 0)
+    if (users.length === 0) {
+      const table = document.querySelector(".table");
+
       return (
-        <span className="badge bg-danger">
-          Никто с тобой не тусанет сегодня
-        </span>
+        (table.style.display = "none"),
+        (
+          <span className="badge bg-danger">
+            Никто с тобой не тусанет сегодня
+          </span>
+        )
       );
+    }
   };
   return (
     <>
