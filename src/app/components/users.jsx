@@ -7,6 +7,8 @@ import GroupList from "./groupList";
 import SearchStatus from "./searchStatus";
 import UserTable from "./usersTable";
 import _ from "lodash";
+import { useParams } from "react-router-dom";
+import UserPage from "./userPage";
 
 const Users = () => {
     const pageSize = 8;
@@ -14,6 +16,9 @@ const Users = () => {
     const [professions, setProfession] = useState();
     const [selectedProf, setSelectedProf] = useState();
     const [sortBy, setSortBy] = useState({ iter: "name", order: "asc" });
+
+    const params = useParams();
+    const { userId } = params;
 
     const [users, setUsers] = useState();
     useEffect(() => {
@@ -45,6 +50,9 @@ const Users = () => {
         setSortBy(item);
     };
 
+    if (userId) {
+        return <UserPage id={userId} />;
+    }
     if (users) {
         const filteredUsers = selectedProf
             ? users.filter(
@@ -103,6 +111,7 @@ const Users = () => {
             </div>
         );
     }
+
     return "LOADING...";
 };
 Users.propTypes = {
