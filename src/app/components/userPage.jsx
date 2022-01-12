@@ -31,6 +31,6 @@ const UserPage = ({ id }) => {
     return <h1>LOADING...</h1>;
 };
 UserPage.propTypes = {
-    id: PropTypes.string
+    id: PropTypes.string.isRequired
 };
 export default UserPage;

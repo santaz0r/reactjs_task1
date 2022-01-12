@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
-import Pagination from "./pagination";
+import Pagination from "../components/pagination";
 import { paginate } from "../utils/paginate";
 import PropTypes from "prop-types";
 import api from "../api";
-import GroupList from "./groupList";
-import SearchStatus from "./searchStatus";
-import UserTable from "./usersTable";
+import GroupList from "../components/groupList";
+import SearchStatus from "../components/searchStatus";
+import UserTable from "../components/usersTable";
 import _ from "lodash";
 import { useParams } from "react-router-dom";
-import UserPage from "./userPage";
+import UserPage from "../components/userPage";
 
 const Users = () => {
     const pageSize = 8;
