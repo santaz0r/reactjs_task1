@@ -41,7 +41,7 @@ const Users = () => {
     }, []);
     useEffect(() => {
         setCurrentPage(1);
-    }, [selectedProf]);
+    }, [selectedProf, search]);
     const handlePageChange = (pageIndex) => {
         setCurrentPage(pageIndex);
     };
