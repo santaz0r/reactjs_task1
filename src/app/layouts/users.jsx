@@ -9,6 +9,7 @@ import UserTable from "../components/usersTable";
 import _ from "lodash";
 import { useParams } from "react-router-dom";
 import UserPage from "../components/userPage";
+import Search from "../components/search";
 
 const Users = () => {
     const pageSize = 8;
@@ -16,6 +17,7 @@ const Users = () => {
     const [professions, setProfession] = useState();
     const [selectedProf, setSelectedProf] = useState();
     const [sortBy, setSortBy] = useState({ iter: "name", order: "asc" });
+    const [search, setSearch] = useState("");
 
     const params = useParams();
     const { userId } = params;
@@ -44,17 +46,27 @@ const Users = () => {
         setCurrentPage(pageIndex);
     };
     const handleProfessionSelect = (item) => {
+        if (search !== "") setSearch("");
         setSelectedProf(item);
     };
     const handleSort = (item) => {
         setSortBy(item);
     };
 
+    const handleSearchChange = ({ target }) => {
+        setSearch(target.value);
+        setSelectedProf(undefined);
+    };
+
     if (userId) {
         return <UserPage id={userId} />;
     }
     if (users) {
-        const filteredUsers = selectedProf
+        const filteredUsers = search
+            ? users.filter((user) =>
+                  user.name.toLowerCase().includes(search.toLowerCase())
+              )
+            : selectedProf
             ? users.filter(
                   (user) =>
                       JSON.stringify(user.profession) ===
@@ -90,6 +102,7 @@ const Users = () => {
                 )}
                 <div className="d-flex flex-column">
                     <SearchStatus length={count} />
+                    <Search onChange={handleSearchChange} value={search} />
                     {count !== 0 && (
                         <UserTable
                             users={usersCrop}
