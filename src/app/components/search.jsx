@@ -15,6 +15,8 @@ const Search = ({ onChange, value }) => {
                     name="search"
                     value={value}
                     onChange={onChange}
+                    className="form-control w-100"
+                    placeholder="Search..."
                 />
             </div>
         </form>

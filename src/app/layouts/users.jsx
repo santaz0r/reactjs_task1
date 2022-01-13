@@ -102,7 +102,9 @@ const Users = () => {
                 )}
                 <div className="d-flex flex-column">
                     <SearchStatus length={count} />
+
                     <Search onChange={handleSearchChange} value={search} />
+
                     {count !== 0 && (
                         <UserTable
                             users={usersCrop}
