@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import QualitiesList from "./qualitiesList";
-import api from "../api";
+import Qualities from "../../ui/qualities";
+import api from "../../../api";
 import { Link } from "react-router-dom";
 
 const UserPage = ({ id }) => {
@@ -16,7 +16,7 @@ const UserPage = ({ id }) => {
                 <h1>{user.name}</h1>
                 <h2>Профессия: {user.profession.name}</h2>
                 <p>
-                    <QualitiesList qualities={user.qualities} />
+                    <Qualities qualities={user.qualities} />
                 </p>
                 <p>
                     <b>Встретился, раз: {user.completedMeetings}</b>
