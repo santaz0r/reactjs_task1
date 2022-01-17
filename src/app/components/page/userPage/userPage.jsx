@@ -5,6 +5,8 @@ import api from "../../../api";
 import { Link } from "react-router-dom";
 
 const UserPage = ({ id }) => {
+    // const params = useParams();
+    // const { edit } = params;
     const [user, setUser] = useState();
     useEffect(() => {
         api.users.getById(id).then((data) => setUser(data));
@@ -25,10 +27,13 @@ const UserPage = ({ id }) => {
                 <Link to="/users">
                     <button>Все пользователи</button>
                 </Link>
+
+                <Link to={`/users/${id}/edit`}>
+                    <button>Обновить</button>
+                </Link>
             </div>
         );
-    }
-    return <h1>LOADING...</h1>;
+    } else return <h1>LOADING...</h1>;
 };
 UserPage.propTypes = {
     id: PropTypes.string.isRequired
