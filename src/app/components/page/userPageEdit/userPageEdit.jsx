@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
 import TextField from "../../common/form/textField";
 import RadioField from "../../common/form/radioField";
 import { useHistory, useParams } from "react-router-dom";
@@ -165,7 +164,4 @@ const UserPageEdit = () => {
     );
 };
 
-UserPageEdit.propTypes = {
-    user: PropTypes.object.isRequired
-};
 export default UserPageEdit;

@@ -2,15 +2,20 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Qualities from "../../ui/qualities";
 import api from "../../../api";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const UserPage = ({ id }) => {
-    // const params = useParams();
-    // const { edit } = params;
+    const history = useHistory();
     const [user, setUser] = useState();
     useEffect(() => {
         api.users.getById(id).then((data) => setUser(data));
     }, []);
+    const handleGoBack = () => {
+        history.push("/users");
+    };
+    const handleGoToEdit = () => {
+        history.push(`/users/${id}/edit`);
+    };
 
     if (user) {
         return (
@@ -24,13 +29,17 @@ const UserPage = ({ id }) => {
                     <b>Встретился, раз: {user.completedMeetings}</b>
                 </p>
                 <h2>Рейтинг: {user.rate} / 5</h2>
-                <Link to="/users">
-                    <button>Все пользователи</button>
-                </Link>
 
-                <Link to={`/users/${id}/edit`}>
-                    <button>Обновить</button>
-                </Link>
+                <button className="btn btn-primary mx-2" onClick={handleGoBack}>
+                    Все пользователи
+                </button>
+
+                <button
+                    className="btn btn-primary mx-2"
+                    onClick={handleGoToEdit}
+                >
+                    Обновить
+                </button>
             </div>
         );
     } else return <h1>LOADING...</h1>;
