@@ -8,10 +8,12 @@ const Users = () => {
     const { userId, edit } = params;
     return (
         <>
-            {edit ? (
-                <UserPageEdit />
-            ) : userId ? (
-                <UserPage id={userId} />
+            {userId ? (
+                edit ? (
+                    <UserPageEdit />
+                ) : (
+                    <UserPage id={userId} />
+                )
             ) : (
                 <UsersList />
             )}
