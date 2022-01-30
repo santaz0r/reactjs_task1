@@ -6,6 +6,7 @@ import api from "../../../api/";
 import { validator } from "../../../utils/validator";
 import SelectField from "../../common/form/selectField";
 import MultiSelectField from "../../common/form/multiSelectField";
+import BackHistoryButton from "../../common/backButton";
 
 const UserPageEdit = () => {
     const { userId } = useParams();
@@ -99,6 +100,7 @@ const UserPageEdit = () => {
     const isValid = Object.keys(errors).length === 0;
     return (
         <div className="container mt-5">
+            <BackHistoryButton />
             <div className="row">
                 {!isLoading && Object.keys(professions).length > 0 ? (
                     <form
