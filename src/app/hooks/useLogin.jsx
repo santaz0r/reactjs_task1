@@ -17,7 +17,6 @@ const LoginProvider = ({ children }) => {
     const [error, setError] = useState(null);
     async function signIn({ email, password, stayOn, ...rest }) {
         const url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.REACT_APP_FIREBASE_KEY}`;
-        console.log(url);
         try {
             const { data } = await httpLogin.post(url, {
                 email,
@@ -34,11 +33,9 @@ const LoginProvider = ({ children }) => {
                     message === "EMAIL_NOT_FOUND" ||
                     message === "INVALID_PASSWORD"
                 ) {
-                    const errorObject = {
-                        email: "Имя пользователя или пароль введены неверно",
-                        password: "Имя пользователя или пароль введены неверно"
-                    };
-                    throw errorObject;
+                    throw new Error(
+                        "Имя пользователя или пароль введены неверно"
+                    );
                 }
             }
         }
