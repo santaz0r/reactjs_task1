@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import TextField from "../common/form/textField";
 import { validator } from "../../utils/validator";
 import CheckBoxField from "../common/form/checkBoxField";
-import { useLogin } from "../../hooks/useLogin";
 import { useHistory } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 // import * as yup from "yup";
 
 const LoginForm = () => {
@@ -22,7 +22,7 @@ const LoginForm = () => {
         setEnterError(null);
     };
     const history = useHistory();
-    const { signIn } = useLogin();
+    const { signIn } = useAuth();
 
     // const validateScheme = yup.object().shape({
     //     password: yup
@@ -85,10 +85,13 @@ const LoginForm = () => {
         console.log(data);
         try {
             await signIn(data);
-            history.push("/");
+            history.push(
+                history.location.state
+                    ? history.location.state.from.pathname
+                    : "/"
+            );
         } catch (error) {
             setEnterError(error.message);
-            console.log(error.message);
         }
     };
 
