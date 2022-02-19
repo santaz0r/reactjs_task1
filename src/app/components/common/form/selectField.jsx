@@ -24,7 +24,6 @@ const SelectField = ({
                   value: options[optionName]._id
               }))
             : options;
-
     return (
         <div className="mb-4">
             <label htmlFor={name} className="form-label">

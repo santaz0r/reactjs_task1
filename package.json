@@ -13,6 +13,7 @@
         "follow-redirects": "^1.14.7",
         "immer": ">=9.0.6",
         "lodash": "^4.17.15",
+        "nanoid": "^3.3.1",
         "node-forge": "^1.2.1",
         "postcss": "^8.4.5",
         "prop-types": "^15.7.2",

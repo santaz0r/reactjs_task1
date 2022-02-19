@@ -9,6 +9,7 @@ import _ from "lodash";
 import Search from "../../../components/search";
 import { useUser } from "../../../hooks/useUsers";
 import { useProfessions } from "../../../hooks/useProfession";
+import { useAuth } from "../../../hooks/useAuth";
 
 const UsersList = () => {
     const { users } = useUser();
@@ -18,6 +19,7 @@ const UsersList = () => {
     const [selectedProf, setSelectedProf] = useState();
     const [sortBy, setSortBy] = useState({ iter: "name", order: "asc" });
     const [search, setSearch] = useState("");
+    const { currentUser } = useAuth();
 
     const handleDelete = (id) => {
         // setUsers((prevState) => prevState.filter((tag) => tag._id !== id));
@@ -51,17 +53,21 @@ const UsersList = () => {
     };
 
     if (users) {
-        const filteredUsers = search
-            ? users.filter((user) =>
-                  user.name.toLowerCase().includes(search.toLowerCase())
-              )
-            : selectedProf
-            ? users.filter(
-                  (user) =>
-                      JSON.stringify(user.profession) ===
-                      JSON.stringify(selectedProf)
-              )
-            : users;
+        function filterUsers(data) {
+            const filteredUsers = search
+                ? data.filter((user) =>
+                      user.name.toLowerCase().includes(search.toLowerCase())
+                  )
+                : selectedProf
+                ? data.filter(
+                      (user) =>
+                          JSON.stringify(user.profession) ===
+                          JSON.stringify(selectedProf)
+                  )
+                : data;
+            return filteredUsers.filter((user) => user._id !== currentUser._id);
+        }
+        const filteredUsers = filterUsers(users);
         const count = filteredUsers.length;
         const sortedUsers = _.orderBy(
             filteredUsers,
