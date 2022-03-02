@@ -8,7 +8,7 @@ import {
     getComments,
     getCommentsLoadingStatus,
     loadCommentsList,
-    remove
+    removeComment
 } from "../../store/comments";
 import { useParams } from "react-router-dom";
 
@@ -22,11 +22,10 @@ const Comments = () => {
     const comments = useSelector(getComments());
 
     const handleRemoveComment = (id) => {
-        dispatch(remove(id));
+        dispatch(removeComment(id));
     };
     const handleSubmit = (data) => {
-        dispatch(createComment(data, userId));
-        dispatch(loadCommentsList(userId));
+        dispatch(createComment({ ...data, pageId: userId }));
     };
     const sortedComments = orderBy(comments, ["created_at"], ["desc"]);
     return (

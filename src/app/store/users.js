@@ -155,7 +155,7 @@ function createUser(payload) {
         try {
             const { content } = await userService.create(payload);
             dispatch(userCreated(content));
-            history.push("/users");
+            history.push(`/users/${content._id}`);
         } catch (error) {
             dispatch(createUserFailed(error.message));
         }

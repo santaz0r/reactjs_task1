@@ -1,6 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAction, createSlice } from "@reduxjs/toolkit";
 import { nanoid } from "nanoid";
 import commentService from "../services/comment.service";
+import { getCurrentUserId } from "./users";
 
 const commentsSlice = createSlice({
     name: "comments",
@@ -41,6 +42,9 @@ const {
     commentRemoved
 } = actions;
 
+const addCommentRequested = createAction("comments/addCommentRequested");
+const removeCommentRequested = createAction("comments/removeCommentRequested");
+
 export const loadCommentsList = (userId) => async (dispatch) => {
     dispatch(commentsRequested());
     try {
@@ -50,29 +54,29 @@ export const loadCommentsList = (userId) => async (dispatch) => {
         dispatch(commentsRequestFiled(error.message));
     }
 };
-export const createComment = (data, userId) => async (dispatch) => {
-    dispatch(commentsRequested());
+export const createComment = (payload) => async (dispatch, getState) => {
+    dispatch(addCommentRequested(payload));
+
     try {
-        const { content } = await commentService.createComment({
-            ...data,
+        const comment = {
+            ...payload,
             _id: nanoid(),
-            pageId: userId,
             created_at: Date.now(),
-            userId
-        });
+            userId: getCurrentUserId()(getState())
+        };
+        const { content } = await commentService.createComment(comment);
         dispatch(commentCreated(content));
     } catch (error) {
         dispatch(commentsRequestFiled(error.message));
     }
 };
 
-export const remove = (commentId) => async (dispatch) => {
-    dispatch(commentsRequested());
+export const removeComment = (commentId) => async (dispatch) => {
+    dispatch(removeCommentRequested());
     try {
         const { content } = await commentService.removeComment(commentId);
-        console.log(content);
         if (content === null) {
-            dispatch(commentRemoved(content));
+            dispatch(commentRemoved(commentId));
         }
     } catch (error) {
         dispatch(commentsRequestFiled(error.message));
